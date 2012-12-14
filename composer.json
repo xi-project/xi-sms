@@ -1,0 +1,29 @@
+{
+    "name": "xi/sms",
+    "type": "library",
+    "description": "Short messaging for PHP 5.3",
+    "keywords": ["SMS"],
+    "homepage": "http://github.com/xi-project/xi-sms",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Mikko Forsström",
+            "email": "pekkisx@gmail.com",
+            "homepage": "http://diktaattoriporssi.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "kriswallsmith/buzz": ">=0.7.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-0": {
+            "Xi\\Sms": "library/",
+            "Xi\\Sms\\Tests": "tests/"
+        }
+    },
+    "minimum-stability": "stable"
+}
