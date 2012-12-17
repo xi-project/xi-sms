@@ -7,16 +7,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Xi\Sms\Gateway;
+namespace Xi\Sms\Gateway\Filter;
 
 use Xi\Sms\SmsMessage;
 
-interface GatewayInterface
+/**
+ * Filter interface
+ */
+interface FilterInterface
 {
     /**
-     * Sends an SMS message. Fire and forget.
-     *
      * @param SmsMessage $message
+     * @return boolean
      */
-    public function send(SmsMessage $message);
+    public function accept(SmsMessage $message);
 }

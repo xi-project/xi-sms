@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file is part of the Xi SMS package.
+ *
+ * For copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Xi\Sms;
 
 /**
@@ -22,6 +29,11 @@ class SmsMessage
      */
     private $to = array();
 
+    /**
+     * @param string $body
+     * @param string $from
+     * @param array|string $to
+     */
     public function __construct($body = null, $from = null, $to = array())
     {
         $this->body = $body;
@@ -33,7 +45,7 @@ class SmsMessage
     }
 
     /**
-     * @param $body
+     * @param string $body
      */
     public function setBody($body)
     {

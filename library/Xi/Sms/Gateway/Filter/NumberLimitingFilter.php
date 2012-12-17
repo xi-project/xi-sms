@@ -1,19 +1,21 @@
 <?php
 
-namespace Xi\Sms\Gateway;
+/**
+ * This file is part of the Xi SMS package.
+ *
+ * For copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Xi\Sms\Gateway\Filter;
 
 use Xi\Sms\SmsMessage;
 
 /**
- * Number limiting gateway decorator
+ * Number limiting
  */
-class NumberLimitingGateway implements GatewayInterface
+class NumberLimitingFilter
 {
-    /**
-     * @var GatewayInterface
-     */
-    private $gateway;
-
     /**
      * @var array
      */
@@ -25,21 +27,19 @@ class NumberLimitingGateway implements GatewayInterface
     private $blacklisted = array();
 
     /**
-     * @param GatewayInterface $gateway
      * @param array $whitelisted An array of whitelist regexes
      * @param array $blacklisted An array of blacklist regexes
      */
-    public function __construct(GatewayInterface $gateway, $whitelisted = array(), $blacklisted = array())
+    public function __construct($whitelisted = array(), $blacklisted = array())
     {
-        $this->gateway = $gateway;
         $this->whitelisted = $whitelisted;
         $this->blacklisted = $blacklisted;
     }
 
     /**
-     * @see GatewayInterface::send
+     * @see FilterInterface::accept
      */
-    public function send(SmsMessage $message)
+    public function accept(SmsMessage $message)
     {
         $to = $message->getTo();
 
@@ -51,12 +51,9 @@ class NumberLimitingGateway implements GatewayInterface
             $to = array_filter($to, array($this, 'handleBlacklisted'));
         }
 
-        if (!$to) {
-            return;
-        }
-
         $message->setTo($to);
-        return $this->gateway->send($message);
+
+        return (bool) $to;
     }
 
     /**
