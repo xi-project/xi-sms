@@ -41,6 +41,9 @@ class InfobipGatewayTest extends \PHPUnit_Framework_TestCase
 
         $message->addTo('358407682810');
 
-        $gateway->send($message);
+        $ret = $gateway->send($message);
+
+        $this->assertTrue($ret);
+
     }
 }

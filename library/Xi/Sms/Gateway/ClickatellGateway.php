@@ -56,5 +56,7 @@ class ClickatellGateway extends AbstractHttpRequestGateway
                 "&password={$this->password}&to={$to}&text={$body}&from={$from}";
             $this->getClient()->post($url, array());
         }
+
+        return true;
     }
 }

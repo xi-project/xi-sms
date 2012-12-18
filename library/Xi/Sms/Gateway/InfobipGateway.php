@@ -87,5 +87,6 @@ class InfobipGateway extends AbstractHttpRequestGateway
         $writer->endDocument();
 
         $this->getClient()->post($this->endpoint . '/sendsms/xml', array(), $writer->outputMemory());
+        return true;
     }
 }

@@ -34,6 +34,8 @@ class ClickatellGatewayTest extends \PHPUnit_Framework_TestCase
             '358503028030'
         );
 
-        $gateway->send($message);
+        $ret = $gateway->send($message);
+
+        $this->assertTrue($ret);
     }
 }
