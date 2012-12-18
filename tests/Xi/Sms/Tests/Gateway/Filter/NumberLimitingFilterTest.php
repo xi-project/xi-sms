@@ -11,6 +11,18 @@ class NumberLimitingFilterTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function classShouldExist()
+    {
+        $this->assertTrue(class_exists('Xi\Sms\Gateway\Filter\NumberLimitingFilter'));
+        $this->assertContains(
+            'Xi\Sms\Gateway\Filter\FilterInterface',
+            class_implements('Xi\Sms\Gateway\Filter\NumberLimitingFilter')
+        );
+    }
+
+    /**
+     * @test
+     */
     public function shouldAcceptWhenNoBlacklistsOrWhitelists()
     {
         $filter = new NumberLimitingFilter();

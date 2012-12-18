@@ -14,7 +14,7 @@ use Xi\Sms\SmsMessage;
 /**
  * Number limiting
  */
-class NumberLimitingFilter
+class NumberLimitingFilter implements FilterInterface
 {
     /**
      * @var array
