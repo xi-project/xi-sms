@@ -9,20 +9,26 @@ class AbstractHttpRequestGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function getClientShouldCreateDefaultClient()
     {
-        $adapter = $this->getMockForAbstractClass(
-            'Xi\Sms\Gateway\AbstractHttpRequestGateway'
-        );
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $adapter = $this
+            ->getMockBuilder('Xi\Sms\Gateway\AbstractHttpRequestGateway')
+            ->setConstructorArgs(array($ed))
+            ->getMockForAbstractClass();
 
         $client = $adapter->getClient();
-
         $this->assertInstanceOf('Buzz\Browser', $client);
     }
 
+    /**
+     * @test
+     */
     public function getClientShouldObeySetter()
     {
-        $adapter = $this->getMockForAbstractClass(
-            'Xi\Sms\Gateway\AbstractHttpRequestGateway'
-        );
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $adapter = $this
+            ->getMockBuilder('Xi\Sms\Gateway\AbstractHttpRequestGateway')
+            ->setConstructorArgs(array($ed))
+            ->getMockForAbstractClass();
 
         $client = $this->getMockBuilder('Buzz\Browser')->disableOriginalConstructor()->getMock();
 

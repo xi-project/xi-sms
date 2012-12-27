@@ -11,7 +11,8 @@ class ClickatellGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function sendsCorrectlyFormattedXmlToRightPlace()
     {
-        $gateway = new ClickatellGateway('lussavain', 'lussuta', 'tussia', 'http://api.dr-kobros.com');
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $gateway = new ClickatellGateway($ed, 'lussavain', 'lussuta', 'tussia', 'http://api.dr-kobros.com');
 
         $browser = $this->getMockBuilder('Buzz\Browser')
             ->disableOriginalConstructor()
@@ -34,8 +35,15 @@ class ClickatellGatewayTest extends \PHPUnit_Framework_TestCase
             '358503028030'
         );
 
-        $ret = $gateway->send($message);
+        $ed
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with(
+                'xi_sms.send',
+                $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
+            );
 
+        $ret = $gateway->send($message);
         $this->assertTrue($ret);
     }
 }

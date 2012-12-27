@@ -10,6 +10,8 @@
 namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
+use Xi\Sms\Event\SmsMessageEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ClickatellGateway extends AbstractHttpRequestGateway
 {
@@ -34,8 +36,9 @@ class ClickatellGateway extends AbstractHttpRequestGateway
      */
     private $endpoint;
 
-    public function __construct($apiKey, $user, $password, $endpoint = 'https://api.clickatell.com')
+    public function __construct(EventDispatcherInterface $eventDispatcher, $apiKey, $user, $password, $endpoint = 'https://api.clickatell.com')
     {
+        parent::__construct($eventDispatcher);
         $this->apiKey = $apiKey;
         $this->user = $user;
         $this->password = $password;
@@ -57,6 +60,8 @@ class ClickatellGateway extends AbstractHttpRequestGateway
             $this->getClient()->post($url, array());
         }
 
+        $event = new SmsMessageEvent($message);
+        $this->getEventDispatcher()->dispatch('xi_sms.send', $event);
         return true;
     }
 }

@@ -14,7 +14,7 @@ use Xi\Sms\SmsMessage;
 /**
  * Mock gateway just stores the sent messages so they can be inspected at will.
  */
-class MockGateway implements GatewayInterface
+class MockGateway extends AbstractGateway
 {
     /**
      * @var array

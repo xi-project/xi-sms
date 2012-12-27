@@ -15,7 +15,7 @@ use Buzz\Client\Curl;
 /**
  * Convenience class for http sending gateways
  */
-abstract class AbstractHttpRequestGateway implements GatewayInterface
+abstract class AbstractHttpRequestGateway extends AbstractGateway
 {
     /**
      * @var Browser

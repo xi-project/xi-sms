@@ -10,6 +10,7 @@
 namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 interface GatewayInterface
 {
@@ -19,4 +20,9 @@ interface GatewayInterface
      * @param SmsMessage $message
      */
     public function send(SmsMessage $message);
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    public function getEventDispatcher();
 }

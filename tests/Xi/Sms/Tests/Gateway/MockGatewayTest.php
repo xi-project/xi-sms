@@ -4,6 +4,8 @@ namespace Svt\Bundle\MainBundle\Tests\Services\Sms\Gateway;
 
 use Xi\Sms\Gateway\MockGateway;
 
+use Xi\Sms\SmsMessage;
+
 class MockGatewayTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -11,13 +13,14 @@ class MockGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function sendsCorrectlyFormattedXmlToRightPlace()
     {
-        $gateway = new MockGateway();
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $gateway = new MockGateway($ed);
 
         $this->assertCount(0, $gateway->getSentMessages());
 
-        $message = new \Xi\Sms\SmsMessage(
+        $message = new SmsMessage(
             'Tehdaan sovinto, pojat.',
-            'Tenhunen',
+            'Losoposki',
             '358503028030'
         );
 

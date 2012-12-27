@@ -10,7 +10,10 @@
 namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
+use Xi\Sms\Event\SmsMessageEvent;
 use Xi\Sms\Gateway\Filter\FilterInterface;
+use Xi\Sms\Event\FilterEvent;
+
 
 /**
  * Filtering gateway decorator
@@ -37,16 +40,29 @@ class FilterGateway implements GatewayInterface
     }
 
     /**
+     * @see GatewayInterface::getEventDispatcher
+     */
+    public function getEventDispatcher()
+    {
+        return $this->gateway->getEventDispatcher();
+    }
+
+    /**
      * @see GatewayInterface::send
      */
     public function send(SmsMessage $message)
     {
         foreach ($this->getFilters() as $filter) {
             if (!$filter->accept($message)) {
+                $event = new FilterEvent($message, $filter);
+                $this->getEventDispatcher()->dispatch('xi_sms.filter.deny', $event);
                 return false;
             }
         }
-        return $this->gateway->send($message);
+        $ret = $this->gateway->send($message);
+        $event = new SmsMessageEvent($message);
+        $this->getEventDispatcher()->dispatch('xi_sms.send', $event);
+        return $ret;
     }
 
     /**

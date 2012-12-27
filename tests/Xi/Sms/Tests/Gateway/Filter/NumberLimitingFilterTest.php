@@ -5,7 +5,6 @@ namespace Svt\Bundle\MainBundle\Tests\Services\Sms\Gateway\Filter;
 use Xi\Sms\SmsMessage;
 use Xi\Sms\Gateway\Filter\NumberLimitingFilter;
 
-
 class NumberLimitingFilterTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -31,7 +30,6 @@ class NumberLimitingFilterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($ret);
     }
 
-
     /**
      * @test
      */
@@ -41,7 +39,7 @@ class NumberLimitingFilterTest extends \PHPUnit_Framework_TestCase
         $message = new SmsMessage('Body moving', 'BodyMover', '358503028030');
         $ret = $filter->accept($message);
         $this->assertFalse($ret);
-        $this->assertCount(0, $message->getTo());
+        $this->assertCount(1, $message->getTo());
     }
 
     /**
@@ -65,6 +63,6 @@ class NumberLimitingFilterTest extends \PHPUnit_Framework_TestCase
 
         $ret = $filter->accept($message);
         $this->assertTrue($ret);
-        $this->assertCount(2, $message->getTo());
+        $this->assertCount(6, $message->getTo());
     }
 }

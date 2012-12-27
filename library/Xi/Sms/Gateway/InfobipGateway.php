@@ -9,7 +9,9 @@
 
 namespace Xi\Sms\Gateway;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xi\Sms\SmsMessage;
+use Xi\Sms\Event\SmsMessageEvent;
 use XMLWriter;
 
 /**
@@ -32,8 +34,9 @@ class InfobipGateway extends AbstractHttpRequestGateway
      */
     private $endpoint;
 
-    public function __construct($user, $password, $endpoint = 'https://api2.infobip.com/api')
+    public function __construct(EventDispatcherInterface $eventDispatcher, $user, $password, $endpoint = 'https://api2.infobip.com/api')
     {
+        parent::__construct($eventDispatcher);
         $this->user = $user;
         $this->password = $password;
         $this->endpoint = $endpoint;
@@ -87,6 +90,10 @@ class InfobipGateway extends AbstractHttpRequestGateway
         $writer->endDocument();
 
         $this->getClient()->post($this->endpoint . '/sendsms/xml', array(), $writer->outputMemory());
+
+        $event = new SmsMessageEvent($message);
+        $this->getEventDispatcher()->dispatch('xi_sms.send', $event);
+
         return true;
     }
 }

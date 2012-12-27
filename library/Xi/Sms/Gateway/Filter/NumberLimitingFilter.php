@@ -50,9 +50,6 @@ class NumberLimitingFilter implements FilterInterface
         if ($this->blacklisted) {
             $to = array_filter($to, array($this, 'handleBlacklisted'));
         }
-
-        $message->setTo($to);
-
         return (bool) $to;
     }
 

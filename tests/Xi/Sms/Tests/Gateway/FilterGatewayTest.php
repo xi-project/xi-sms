@@ -12,7 +12,10 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function sendsWhenNoFilters()
     {
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $innerGateway = $this->getMock('Xi\Sms\Gateway\GatewayInterface');
+        $innerGateway->expects($this->any())->method('getEventDispatcher')->will($this->returnValue($ed));
+
         $gateway = new FilterGateway($innerGateway);
         $message = new SmsMessage('Lussuhovi', '358503028030', '358503028031');
 
@@ -26,7 +29,9 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function initializesWithFiltersAndAddsWithAdd()
     {
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $innerGateway = $this->getMock('Xi\Sms\Gateway\GatewayInterface');
+        $innerGateway->expects($this->any())->method('getEventDispatcher')->will($this->returnValue($ed));
 
         $gateway = new FilterGateway(
             $innerGateway,
@@ -59,7 +64,10 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
         $mockFilter = $this->getMock('Xi\Sms\Gateway\Filter\FilterInterface');
         $mockFilter2 = $this->getMock('Xi\Sms\Gateway\Filter\FilterInterface');
 
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $innerGateway = $this->getMock('Xi\Sms\Gateway\GatewayInterface');
+        $innerGateway->expects($this->any())->method('getEventDispatcher')->will($this->returnValue($ed));
+
         $message = new SmsMessage('Lussuhovi', '358503028030', '358503028031');
 
         $gateway = new FilterGateway($innerGateway);
@@ -70,6 +78,15 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
         $mockFilter2->expects($this->once())->method('accept')->with($message)->will($this->returnValue(false));
 
         $innerGateway->expects($this->never())->method('send');
+        $ed
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with(
+                'xi_sms.filter.deny',
+                $this->isInstanceOf('Xi\Sms\Event\FilterEvent')
+            );
+
+
 
         $gateway->send($message);
     }
@@ -83,7 +100,10 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
         $mockFilter = $this->getMock('Xi\Sms\Gateway\Filter\FilterInterface');
         $mockFilter2 = $this->getMock('Xi\Sms\Gateway\Filter\FilterInterface');
 
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $innerGateway = $this->getMock('Xi\Sms\Gateway\GatewayInterface');
+        $innerGateway->expects($this->any())->method('getEventDispatcher')->will($this->returnValue($ed));
+
         $message = new SmsMessage('Lussuhovi', '358503028030', '358503028031');
 
         $gateway = new FilterGateway($innerGateway);
@@ -94,6 +114,13 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
         $mockFilter2->expects($this->never())->method('accept');
 
         $innerGateway->expects($this->never())->method('send');
+        $ed
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with(
+            'xi_sms.filter.deny',
+            $this->isInstanceOf('Xi\Sms\Event\FilterEvent')
+        );
 
         $gateway->send($message);
     }
@@ -106,7 +133,10 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
         $mockFilter = $this->getMock('Xi\Sms\Gateway\Filter\FilterInterface');
         $mockFilter2 = $this->getMock('Xi\Sms\Gateway\Filter\FilterInterface');
 
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $innerGateway = $this->getMock('Xi\Sms\Gateway\GatewayInterface');
+        $innerGateway->expects($this->any())->method('getEventDispatcher')->will($this->returnValue($ed));
+
         $message = new SmsMessage('Lussuhovi', '358503028030', '358503028031');
 
         $gateway = new FilterGateway($innerGateway);
@@ -117,6 +147,14 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
         $mockFilter2->expects($this->once())->method('accept')->with($message)->will($this->returnValue(true));
 
         $innerGateway->expects($this->once())->method('send')->with($message);
+
+        $ed
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with(
+            'xi_sms.send',
+            $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
+        );
 
         $gateway->send($message);
     }
