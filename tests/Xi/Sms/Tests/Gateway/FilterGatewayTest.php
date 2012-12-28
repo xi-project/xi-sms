@@ -118,9 +118,9 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('dispatch')
             ->with(
-            'xi_sms.filter.deny',
-            $this->isInstanceOf('Xi\Sms\Event\FilterEvent')
-        );
+                'xi_sms.filter.deny',
+                $this->isInstanceOf('Xi\Sms\Event\FilterEvent')
+            );
 
         $gateway->send($message);
     }
@@ -152,9 +152,9 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('dispatch')
             ->with(
-            'xi_sms.send',
-            $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
-        );
+                'xi_sms.send',
+                $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
+            );
 
         $gateway->send($message);
     }

@@ -14,7 +14,6 @@ use Xi\Sms\Event\SmsMessageEvent;
 use Xi\Sms\Gateway\Filter\FilterInterface;
 use Xi\Sms\Event\FilterEvent;
 
-
 /**
  * Filtering gateway decorator
  */
@@ -80,6 +79,4 @@ class FilterGateway implements GatewayInterface
     {
         $this->filters[] = $filter;
     }
-
 }
-

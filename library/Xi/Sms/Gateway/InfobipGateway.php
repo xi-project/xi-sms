@@ -34,8 +34,12 @@ class InfobipGateway extends AbstractHttpRequestGateway
      */
     private $endpoint;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, $user, $password, $endpoint = 'https://api2.infobip.com/api')
-    {
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        $user,
+        $password,
+        $endpoint = 'https://api2.infobip.com/api'
+    ) {
         parent::__construct($eventDispatcher);
         $this->user = $user;
         $this->password = $password;

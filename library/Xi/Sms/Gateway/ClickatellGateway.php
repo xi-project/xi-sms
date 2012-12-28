@@ -30,14 +30,18 @@ class ClickatellGateway extends AbstractHttpRequestGateway
      */
     private $password;
 
-
     /**
      * @var string
      */
     private $endpoint;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, $apiKey, $user, $password, $endpoint = 'https://api.clickatell.com')
-    {
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        $apiKey,
+        $user,
+        $password,
+        $endpoint = 'https://api.clickatell.com'
+    ) {
         parent::__construct($eventDispatcher);
         $this->apiKey = $apiKey;
         $this->user = $user;

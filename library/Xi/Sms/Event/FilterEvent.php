@@ -26,6 +26,4 @@ class FilterEvent extends SmsMessageEvent
     {
         return $this->filter;
     }
-
-
 }

@@ -23,5 +23,4 @@ abstract class AbstractGateway implements GatewayInterface
     {
         return $this->eventDispatcher;
     }
-
 }

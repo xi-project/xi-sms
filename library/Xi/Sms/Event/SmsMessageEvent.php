@@ -27,5 +27,4 @@ class SmsMessageEvent extends Event
     {
         return $this->message;
     }
-
 }

@@ -46,13 +46,11 @@ class InfobipGatewayTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('dispatch')
             ->with(
-            'xi_sms.send',
-            $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
-        );
+                'xi_sms.send',
+                $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
+            );
 
         $ret = $gateway->send($message);
-
         $this->assertTrue($ret);
-
     }
 }
