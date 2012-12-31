@@ -149,12 +149,8 @@ class FilterGatewayTest extends \PHPUnit_Framework_TestCase
         $innerGateway->expects($this->once())->method('send')->with($message);
 
         $ed
-            ->expects($this->once())
-            ->method('dispatch')
-            ->with(
-                'xi_sms.send',
-                $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
-            );
+            ->expects($this->never())
+            ->method('dispatch');
 
         $gateway->send($message);
     }

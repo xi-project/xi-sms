@@ -58,10 +58,7 @@ class FilterGateway implements GatewayInterface
                 return false;
             }
         }
-        $ret = $this->gateway->send($message);
-        $event = new SmsMessageEvent($message);
-        $this->getEventDispatcher()->dispatch('xi_sms.send', $event);
-        return $ret;
+        return $this->gateway->send($message);
     }
 
     /**
