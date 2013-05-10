@@ -22,8 +22,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Xi\\Sms": "library/",
-            "Xi\\Sms\\Tests": "tests/"
+            "Xi\\Sms": "library/"
         }
     },
     "minimum-stability": "stable"

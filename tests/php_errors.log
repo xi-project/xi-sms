@@ -1,0 +1,75 @@
+[27-Dec-2012 14:35:28 UTC] PHP Fatal error:  Class Xi\Sms\Gateway\MockGateway contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (Xi\Sms\Gateway\GatewayInterface::getEventDispatcher) in /wwwroot/xi-sms/library/Xi/Sms/Gateway/MockGateway.php on line 36
+[27-Dec-2012 14:35:28 UTC] PHP Stack trace:
+[27-Dec-2012 14:35:28 UTC] PHP   1. {main}() /wwwroot/php/bin/phpunit:0
+[27-Dec-2012 14:35:28 UTC] PHP   2. PHPUnit_TextUI_Command::main() /wwwroot/php/bin/phpunit:46
+[27-Dec-2012 14:35:28 UTC] PHP   3. PHPUnit_TextUI_Command->run() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:129
+[27-Dec-2012 14:35:28 UTC] PHP   4. PHPUnit_TextUI_TestRunner->doRun() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:176
+[27-Dec-2012 14:35:28 UTC] PHP   5. PHPUnit_Framework_TestSuite->run() /wwwroot/php/pear/PHPUnit/TextUI/TestRunner.php:346
+[27-Dec-2012 14:35:28 UTC] PHP   6. PHPUnit_Framework_TestSuite->run() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:705
+[27-Dec-2012 14:35:28 UTC] PHP   7. PHPUnit_Framework_TestSuite->runTest() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:745
+[27-Dec-2012 14:35:28 UTC] PHP   8. PHPUnit_Framework_TestCase->run() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:775
+[27-Dec-2012 14:35:28 UTC] PHP   9. PHPUnit_Framework_TestResult->run() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:769
+[27-Dec-2012 14:35:28 UTC] PHP  10. PHPUnit_Framework_TestCase->runBare() /wwwroot/php/pear/PHPUnit/Framework/TestResult.php:648
+[27-Dec-2012 14:35:28 UTC] PHP  11. PHPUnit_Framework_TestCase->runTest() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:824
+[27-Dec-2012 14:35:28 UTC] PHP  12. ReflectionMethod->invokeArgs() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:969
+[27-Dec-2012 14:35:28 UTC] PHP  13. Xi\Sms\Tests\Gateway\MockGatewayTest->sendsCorrectlyFormattedXmlToRightPlace() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:969
+[27-Dec-2012 14:35:28 UTC] PHP  14. Composer\Autoload\ClassLoader->loadClass() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:0
+[27-Dec-2012 14:35:28 UTC] PHP  15. include() /wwwroot/xi-sms/vendor/composer/ClassLoader.php:150
+[27-Dec-2012 14:38:47 UTC] PHP Fatal error:  Class 'SmsMessage' not found in /wwwroot/xi-sms/tests/Xi/Sms/Tests/Gateway/MockGatewayTest.php on line 21
+[27-Dec-2012 14:38:47 UTC] PHP Stack trace:
+[27-Dec-2012 14:38:47 UTC] PHP   1. {main}() /wwwroot/php/bin/phpunit:0
+[27-Dec-2012 14:38:47 UTC] PHP   2. PHPUnit_TextUI_Command::main() /wwwroot/php/bin/phpunit:46
+[27-Dec-2012 14:38:47 UTC] PHP   3. PHPUnit_TextUI_Command->run() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:129
+[27-Dec-2012 14:38:47 UTC] PHP   4. PHPUnit_TextUI_TestRunner->doRun() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:176
+[27-Dec-2012 14:38:47 UTC] PHP   5. PHPUnit_Framework_TestSuite->run() /wwwroot/php/pear/PHPUnit/TextUI/TestRunner.php:346
+[27-Dec-2012 14:38:47 UTC] PHP   6. PHPUnit_Framework_TestSuite->run() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:705
+[27-Dec-2012 14:38:47 UTC] PHP   7. PHPUnit_Framework_TestSuite->runTest() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:745
+[27-Dec-2012 14:38:47 UTC] PHP   8. PHPUnit_Framework_TestCase->run() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:775
+[27-Dec-2012 14:38:47 UTC] PHP   9. PHPUnit_Framework_TestResult->run() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:769
+[27-Dec-2012 14:38:47 UTC] PHP  10. PHPUnit_Framework_TestCase->runBare() /wwwroot/php/pear/PHPUnit/Framework/TestResult.php:648
+[27-Dec-2012 14:38:47 UTC] PHP  11. PHPUnit_Framework_TestCase->runTest() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:824
+[27-Dec-2012 14:38:47 UTC] PHP  12. ReflectionMethod->invokeArgs() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:969
+[27-Dec-2012 14:38:47 UTC] PHP  13. Xi\Sms\Tests\Gateway\MockGatewayTest->sendsCorrectlyFormattedXmlToRightPlace() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:969
+[27-Dec-2012 15:02:14 UTC] PHP Fatal error:  Class 'Xi\Sms\Gateway\SmsMessageEvent' not found in /wwwroot/xi-sms/library/Xi/Sms/Gateway/ClickatellGateway.php on line 62
+[27-Dec-2012 15:02:14 UTC] PHP Stack trace:
+[27-Dec-2012 15:02:14 UTC] PHP   1. {main}() /wwwroot/php/bin/phpunit:0
+[27-Dec-2012 15:02:14 UTC] PHP   2. PHPUnit_TextUI_Command::main() /wwwroot/php/bin/phpunit:46
+[27-Dec-2012 15:02:14 UTC] PHP   3. PHPUnit_TextUI_Command->run() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:129
+[27-Dec-2012 15:02:14 UTC] PHP   4. PHPUnit_TextUI_TestRunner->doRun() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:176
+[27-Dec-2012 15:02:14 UTC] PHP   5. PHPUnit_Framework_TestSuite->run() /wwwroot/php/pear/PHPUnit/TextUI/TestRunner.php:346
+[27-Dec-2012 15:02:14 UTC] PHP   6. PHPUnit_Framework_TestSuite->run() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:705
+[27-Dec-2012 15:02:14 UTC] PHP   7. PHPUnit_Framework_TestSuite->runTest() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:745
+[27-Dec-2012 15:02:14 UTC] PHP   8. PHPUnit_Framework_TestCase->run() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:775
+[27-Dec-2012 15:02:14 UTC] PHP   9. PHPUnit_Framework_TestResult->run() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:769
+[27-Dec-2012 15:02:14 UTC] PHP  10. PHPUnit_Framework_TestCase->runBare() /wwwroot/php/pear/PHPUnit/Framework/TestResult.php:648
+[27-Dec-2012 15:02:14 UTC] PHP  11. PHPUnit_Framework_TestCase->runTest() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:824
+[27-Dec-2012 15:02:14 UTC] PHP  12. ReflectionMethod->invokeArgs() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:969
+[27-Dec-2012 15:02:14 UTC] PHP  13. Xi\Sms\Tests\Gateway\ClickatellGatewayTest->sendsCorrectlyFormattedXmlToRightPlace() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:969
+[27-Dec-2012 15:02:14 UTC] PHP  14. Xi\Sms\Gateway\ClickatellGateway->send() /wwwroot/xi-sms/tests/Xi/Sms/Tests/Gateway/ClickatellGatewayTest.php:46
+[27-Dec-2012 15:07:01 UTC] PHP Fatal error:  Class 'Xi\Sms\Tests\Event\FilterEvent' not found in /wwwroot/xi-sms/tests/Xi/Sms/Tests/Event/FilterEventTest.php on line 17
+[27-Dec-2012 15:07:01 UTC] PHP Stack trace:
+[27-Dec-2012 15:07:01 UTC] PHP   1. {main}() /wwwroot/php/bin/phpunit:0
+[27-Dec-2012 15:07:01 UTC] PHP   2. PHPUnit_TextUI_Command::main() /wwwroot/php/bin/phpunit:46
+[27-Dec-2012 15:07:01 UTC] PHP   3. PHPUnit_TextUI_Command->run() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:129
+[27-Dec-2012 15:07:01 UTC] PHP   4. PHPUnit_TextUI_TestRunner->doRun() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:176
+[27-Dec-2012 15:07:01 UTC] PHP   5. PHPUnit_Framework_TestSuite->run() /wwwroot/php/pear/PHPUnit/TextUI/TestRunner.php:346
+[27-Dec-2012 15:07:01 UTC] PHP   6. PHPUnit_Framework_TestSuite->run() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:705
+[27-Dec-2012 15:07:01 UTC] PHP   7. PHPUnit_Framework_TestSuite->runTest() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:745
+[27-Dec-2012 15:07:01 UTC] PHP   8. PHPUnit_Framework_TestCase->run() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:775
+[27-Dec-2012 15:07:01 UTC] PHP   9. PHPUnit_Framework_TestResult->run() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:769
+[27-Dec-2012 15:07:01 UTC] PHP  10. PHPUnit_Framework_TestCase->runBare() /wwwroot/php/pear/PHPUnit/Framework/TestResult.php:648
+[27-Dec-2012 15:07:01 UTC] PHP  11. PHPUnit_Framework_TestCase->runTest() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:824
+[27-Dec-2012 15:07:01 UTC] PHP  12. ReflectionMethod->invokeArgs() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:969
+[27-Dec-2012 15:07:01 UTC] PHP  13. Xi\Sms\Tests\Event\FilterEventTest->getMessageShouldReturnMessage() /wwwroot/php/pear/PHPUnit/Framework/TestCase.php:969
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP Fatal error:  Cannot redeclare class Xi\Sms\Tests\Gateway\ClickatellGatewayTest in /wwwroot/xi-sms/tests/Xi/Sms/Tests/Gateway/LabyrinttiGatewayTest.php on line 49
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP Stack trace:
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP   1. {main}() /wwwroot/php/bin/phpunit:0
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP   2. PHPUnit_TextUI_Command::main() /wwwroot/php/bin/phpunit:52
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP   3. PHPUnit_TextUI_Command->run() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:129
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP   4. PHPUnit_TextUI_Command->handleArguments() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:138
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP   5. PHPUnit_Util_Configuration->getTestSuiteConfiguration() /wwwroot/php/pear/PHPUnit/TextUI/Command.php:657
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP   6. PHPUnit_Util_Configuration->getTestSuite() /wwwroot/php/pear/PHPUnit/Util/Configuration.php:776
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP   7. PHPUnit_Framework_TestSuite->addTestFiles() /wwwroot/php/pear/PHPUnit/Util/Configuration.php:860
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP   8. PHPUnit_Framework_TestSuite->addTestFile() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:416
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP   9. PHPUnit_Util_Fileloader::checkAndLoad() /wwwroot/php/pear/PHPUnit/Framework/TestSuite.php:355
+[09-Apr-2013 15:40:30 Europe/Helsinki] PHP  10. PHPUnit_Util_Fileloader::load() /wwwroot/php/pear/PHPUnit/Util/Fileloader.php:76

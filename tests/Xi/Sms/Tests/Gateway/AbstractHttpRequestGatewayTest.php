@@ -1,6 +1,6 @@
 <?php
 
-namespace Svt\Bundle\MainBundle\Tests\Services\Sms\Gateway;
+namespace Xi\Sms\Tests\Gateway;
 
 class AbstractHttpRequestGatewayTest extends \PHPUnit_Framework_TestCase
 {

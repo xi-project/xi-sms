@@ -1,6 +1,6 @@
 <?php
 
-namespace Svt\Bundle\MainBundle\Tests\Services\Sms\Gateway\Filter;
+namespace Xi\Sms\Tests\Gateway\Filter;
 
 use Xi\Sms\SmsMessage;
 use Xi\Sms\Gateway\Filter\NumberLimitingFilter;

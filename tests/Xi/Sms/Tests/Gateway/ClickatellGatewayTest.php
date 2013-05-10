@@ -1,6 +1,6 @@
 <?php
 
-namespace Svt\Bundle\MainBundle\Tests\Services\Sms\Gateway;
+namespace Xi\Sms\Tests\Gateway;
 
 use Xi\Sms\Gateway\ClickatellGateway;
 
