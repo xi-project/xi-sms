@@ -58,7 +58,7 @@ class InfobipGateway extends AbstractHttpRequestGateway
 
         $writer->startElement('SMS');
 
-        $writer->startElement('authentification');
+        $writer->startElement('authentication');
 
         $writer->startElement('username');
         $writer->text($this->user);
@@ -74,6 +74,10 @@ class InfobipGateway extends AbstractHttpRequestGateway
 
         $writer->startElement('sender');
         $writer->text($message->getFrom());
+        $writer->endElement();
+
+        $writer->startElement('datacoding');
+        $writer->text('3');
         $writer->endElement();
 
         $writer->startElement('text');
@@ -93,7 +97,9 @@ class InfobipGateway extends AbstractHttpRequestGateway
         $writer->endElement();
         $writer->endDocument();
 
-        $this->getClient()->post($this->endpoint . '/sendsms/xml', array(), $writer->outputMemory());
+        $requestBody = 'XML=' . preg_replace('/<\?xml.*\?>\n?/', '', $writer->outputMemory());
+
+        $response = $this->getClient()->post($this->endpoint . '/v3/sendsms/xml', array(), $requestBody);
 
         $event = new SmsMessageEvent($message);
         $this->getEventDispatcher()->dispatch('xi_sms.send', $event);
