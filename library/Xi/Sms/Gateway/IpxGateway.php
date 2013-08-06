@@ -84,20 +84,15 @@ class IpxGateway extends AbstractGateway
      */
     public function send(SmsMessage $message)
     {
-        $success = true;
-        foreach ($message->getTo() as $receiver) {
+        $result = $this->sendMessage(
+            $message->getFrom(),
+            $message->getTo(),
+            $message->getBody()
+        );
 
-            $result = $this->sendMessage(
-                $message->getFrom(),
-                $receiver,
-                $message->getBody()
-            );
+        $this->dispatchSendEvent($message);
 
-            $this->dispatchSendEvent($message);
-
-            $success = $success && $result;
-        }
-        return $success;
+        return $result;
     }
 
     /**
@@ -131,6 +126,11 @@ class IpxGateway extends AbstractGateway
         $originatorTON = $this->determineTON($from);
 
         $userData = (string) $body;
+
+        //Multiple recipients / distribution list
+        if(is_array($to)) {
+            $to = implode(';', $to);
+        }
 
         return array(
             'correlationId' => $correlationId,
@@ -174,7 +174,7 @@ class IpxGateway extends AbstractGateway
 
     /**
      * @param string $from
-     * @param string $to
+     * @param string|array $to
      * @param string $body
      * @return bool true on successful send
      */
