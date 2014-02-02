@@ -84,20 +84,15 @@ class IpxGateway extends AbstractGateway
      */
     public function send(SmsMessage $message)
     {
-        $success = true;
-        foreach ($message->getTo() as $receiver) {
+        $result = $this->sendMessage(
+            $message->getFrom(),
+            $message->getTo(),
+            $message->getBody()
+        );
 
-            $result = $this->sendMessage(
-                $message->getFrom(),
-                $receiver,
-                $message->getBody()
-            );
+        $this->dispatchSendEvent($message);
 
-            $this->dispatchSendEvent($message);
-
-            $success = $success && $result;
-        }
-        return $success;
+        return $result;
     }
 
     /**
@@ -124,7 +119,17 @@ class IpxGateway extends AbstractGateway
         return $this->client;
     }
 
-    protected function getParams($from, $to, $body)
+    /**
+     * Get SOAP call params
+     *
+     * @param string $from Sender string is msisdn
+     * @param string|array $to Recipients msisdn
+     * @param string $body Message body
+     * @param array $params Params to override defaults
+     *
+     * @return array
+     */
+    protected function getParams($from, $to, $body, $params = array())
     {
         $correlationId = microtime(true);
         $originatingAddress = $from; //If MSISDN
@@ -132,28 +137,36 @@ class IpxGateway extends AbstractGateway
 
         $userData = (string) $body;
 
-        return array(
-            'correlationId' => $correlationId,
-            'originatingAddress' => $originatingAddress,
-            'originatorTON' => $originatorTON,
-            'destinationAddress' => $to,
-            'userData' => $userData,
-            'userDataHeader' => '#NULL#',
-            'DCS' => '-1',
-            'PID' => '-1',
-            'relativeValidityTime' => '-1',
-            'deliveryTime' => '#NULL#',
-            'statusReportFlags' => '0',
-            'accountName' => '#NULL#',
-            'tariffClass' => 'EUR0',
-            'VAT' => '-1',
-            'referenceId' => '#NULL#',
-            'serviceName' => '#NULL#',
-            'serviceCategory' => '#NULL#',
-            'serviceMetaData' => '#NULL#',
-            'campaignName' => '#NULL#',
-            'username' => $this->username,
-            'password' => $this->password
+        //Multiple recipients / distribution list
+        if(is_array($to)) {
+            $to = implode(';', $to);
+        }
+
+        return array_merge(
+            array(
+                'correlationId' => $correlationId,
+                'originatingAddress' => $originatingAddress,
+                'originatorTON' => $originatorTON,
+                'destinationAddress' => $to,
+                'userData' => $userData,
+                'userDataHeader' => '#NULL#',
+                'DCS' => '-1',
+                'PID' => '-1',
+                'relativeValidityTime' => '-1',
+                'deliveryTime' => '#NULL#',
+                'statusReportFlags' => '0',
+                'accountName' => '#NULL#',
+                'tariffClass' => 'EUR0',
+                'VAT' => '-1',
+                'referenceId' => '#NULL#',
+                'serviceName' => '#NULL#',
+                'serviceCategory' => '#NULL#',
+                'serviceMetaData' => '#NULL#',
+                'campaignName' => '#NULL#',
+                'username' => $this->username,
+                'password' => $this->password
+            ),
+            $params
         );
     }
 
@@ -174,16 +187,30 @@ class IpxGateway extends AbstractGateway
 
     /**
      * @param string $from
-     * @param string $to
+     * @param string|array $to
      * @param string $body
      * @return bool true on successful send
      */
     protected function sendMessage($from, $to, $body)
     {
-        $params = $this->getParams($from, $to, $body);
         $client = $this->getClient();
 
-        $result = $client->__soapCall('send', array('request' => $params));
+        //Handle multipart messages
+        if(strlen($body) > 160) {
+            $parts = str_split($body, 154);
+            $messageCount = count($parts);
+
+            foreach($parts as $index => $body) {
+                $params = array('userDataHeader' => sprintf('0500030F%02d%02d', $messageCount, $index+1));
+                $params = $this->getParams($from, $to, $body, $params);
+                $result = $client->__soapCall('send', array('request' => $params));
+            }
+        }
+        else {
+            $params = $this->getParams($from, $to, $body);
+            $result = $client->__soapCall('send', array('request' => $params));
+        }
+
 
         return $this->checkResult($result);
     }
