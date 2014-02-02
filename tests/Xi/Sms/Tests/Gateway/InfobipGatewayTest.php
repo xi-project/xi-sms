@@ -20,16 +20,16 @@ class InfobipGatewayTest extends \PHPUnit_Framework_TestCase
 
         $gateway->setClient($browser);
 
-        $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
-            "<SMS><authentification><username>lussuta</username><password>tussia</password>" .
-            "</authentification><message>" .
-            "<sender>Losoposki</sender><text>Tehdaan sovinto, pojat.</text></message>" .
+        $xml =
+            "XML=<SMS><authentication><username>lussuta</username><password>tussia</password>" .
+            "</authentication><message>" .
+            "<sender>Losoposki</sender><datacoding>3</datacoding><text>Tehdaan sovinto, pojat.</text></message>" .
             "<recipients><gsm>358503028030</gsm><gsm>358407682810</gsm></recipients></SMS>\n";
 
         $browser
             ->expects($this->once())->method('post')
             ->with(
-                'http://dr-kobros.com/api/sendsms/xml',
+                'http://dr-kobros.com/api/v3/sendsms/xml',
                 array(),
                 $xml
             );
