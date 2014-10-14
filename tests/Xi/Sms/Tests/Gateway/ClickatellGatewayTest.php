@@ -9,7 +9,7 @@ class ClickatellGatewayTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function sendsCorrectlyFormattedXmlToRightPlace()
+    public function sendsRequest()
     {
         $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $gateway = new ClickatellGateway($ed, 'lussavain', 'lussuta', 'tussia', 'http://api.dr-kobros.com');

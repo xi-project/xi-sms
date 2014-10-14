@@ -3,21 +3,37 @@
 namespace Xi\Sms\Tests\Gateway;
 
 use Xi\Sms\Gateway\MessageBirdGateway;
+use Xi\Sms\SmsMessage;
 
 class MessageBirdGatewayTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
-    public function sendsCorrectlyFormattedXmlToRightPlace()
+    public function sends()
     {
-        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $gateway = new MessageBirdGateway($ed, '', 'MY_USERNAME', 'MY_PASSWORD');
 
-        $message = new \Xi\Sms\SmsMessage(
-            'Hello world!',
-            '31000000000',
-            '31000000000'
+        $browser = $this->getMockBuilder('Buzz\Browser')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $browser
+            ->expects($this->once())
+            ->method('post')
+            ->with(
+                'https://api.messagebird.com/xml/sms?gateway=1&username=username&password=password&originator=Tietoisku&recipients=3581234567&type=normal&message=Tenhunen+lipaisee',
+                array()
+            );
+
+        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $gateway = new MessageBirdGateway($ed, 'apikey', 'username', 'password');
+
+        $gateway->setClient($browser);
+
+        $message = new SmsMessage(
+            'Tenhunen lipaisee',
+            'Tietoisku',
+            '3581234567'
         );
 
         $ed
