@@ -34,9 +34,7 @@ class MessageBirdGateway extends AbstractHttpRequestGateway
      * @var string
      */
     private $endpoint;
-    
-    
-    
+
     private $gateway = 1;
     private $type = 'normal';
 
