@@ -2,38 +2,35 @@
 
 namespace Xi\Sms\Tests\Gateway;
 
-use Xi\Sms\Gateway\MessageBirdGateway;
+use MessageBird\Client;
 use Xi\Sms\SmsMessage;
+use Xi\Sms\Gateway\MessageBirdGateway;
 
 class MessageBirdGatewayTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (!RECEIVER_MSISDN) {
+            return $this->markTestSkipped('Receiver MSISDN must be set');
+        }
+
+        if (!MESSAGEBIRD_APIKEY) {
+            return $this->markTestSkipped('Api key must be set');
+        }
+    }
+
     /**
      * @test
      */
     public function sends()
     {
-
-        $browser = $this->getMockBuilder('Buzz\Browser')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $browser
-            ->expects($this->once())
-            ->method('post')
-            ->with(
-                'https://api.messagebird.com/xml/sms?gateway=1&username=username&password=password&originator=Tietoisku&recipients=3581234567&type=normal&message=Tenhunen+lipaisee',
-                array()
-            );
-
         $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $gateway = new MessageBirdGateway($ed, 'apikey', 'username', 'password');
-
-        $gateway->setClient($browser);
+        $gateway = new MessageBirdGateway($ed, MESSAGEBIRD_APIKEY);
 
         $message = new SmsMessage(
-            'Tenhunen lipaisee',
-            'Tietoisku',
-            '3581234567'
+            'Pekkis tassa lussuttaa.',
+            '358503028030',
+            '358503028030'
         );
 
         $ed

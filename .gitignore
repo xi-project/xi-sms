@@ -1,5 +1,7 @@
 # Project
-/vendor
+vendor/
+tests/phpunit.xml
+composer.lock
 
 # IDEs
 /.idea

@@ -12,8 +12,10 @@ namespace Xi\Sms\Gateway;
 use Xi\Sms\SmsMessage;
 use Xi\Sms\Event\SmsMessageEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use MessageBird\Client;
+use MessageBird\Objects\Message;
 
-class MessageBirdGateway extends AbstractHttpRequestGateway
+class MessageBirdGateway extends AbstractGateway
 {
     /**
      * @var string
@@ -21,35 +23,36 @@ class MessageBirdGateway extends AbstractHttpRequestGateway
     private $apiKey;
 
     /**
-     * @var string
+     * @var Client
      */
-    private $user;
-
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @var string
-     */
-    private $endpoint;
-
-    private $gateway = 1;
-    private $type = 'normal';
+    private $client;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        $apiKey,
-        $user,
-        $password,
-        $endpoint = 'https://api.messagebird.com'
+        $apiKey
     ) {
         parent::__construct($eventDispatcher);
         $this->apiKey = $apiKey;
-        $this->user = $user;
-        $this->password = $password;
-        $this->endpoint = $endpoint;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        if (!$this->client) {
+            $this->client = new Client($this->apiKey);
+        }
+
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function setClient(Client $client)
+    {
+        $this->client = $client;
     }
 
     /**
@@ -58,23 +61,16 @@ class MessageBirdGateway extends AbstractHttpRequestGateway
      */
     public function send(SmsMessage $message)
     {
-        $body = urlencode(utf8_decode($message->getBody()));
-        $from = urlencode($message->getFrom());
+        $msg = new Message();
+        $msg->originator = $message->getFrom();
+        $msg->recipients = $message->getTo();
+        $msg->body = $message->getBody();
 
-        foreach ($message->getTo() as $to) {
-            $url = "{$this->endpoint}/xml/sms" .
-                '?gateway=' . urlencode($this->gateway) .
-                '&username=' . urlencode($this->user) .
-                '&password=' . urlencode($this->password) .
-                '&originator=' . $from .
-                '&recipients=' . urlencode($to) .
-                '&type=' . urlencode($this->type) .
-                '&message=' . $body;
-            $this->getClient()->post($url, array());
-        }
+        $this->getClient()->messages->create($msg);
 
         $event = new SmsMessageEvent($message);
         $this->getEventDispatcher()->dispatch('xi_sms.send', $event);
+
         return true;
     }
 }
