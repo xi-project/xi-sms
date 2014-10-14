@@ -1,6 +1,13 @@
 #!/usr/bin/env php
 <?php
 
+use Xi\Sms\SmsService;
+use Xi\Sms\SmsMessage;
+use Xi\Sms\Gateway\MessageBirdGateway;
+use Xi\Sms\Event\Events;
+use Xi\Sms\Event\SmsMessageEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+
 if (!@include __DIR__ . '/../vendor/autoload.php') {
     die("You must set up the project dependencies, run the following commands:
 wget http://getcomposer.org/composer.phar
@@ -19,17 +26,19 @@ if (count($argv) != 3 || in_array('-h', $argv) || in_array('--argv', $argv)) {
 $from = $argv[1];
 $to = $argv[2];
 
-$ed = new \Symfony\Component\EventDispatcher\EventDispatcher();
+$ed = new EventDispatcher();
 
 $gw = null;
-$gw = new \Xi\Sms\Gateway\MessageBirdGateway($ed, '');
+$gw = new MessageBirdGateway('');
 if (!$gw) {
     throw new LogicException('Configure gateway');
 }
 
+$service = new SmsService($gw, $ed);
+
 $ed->addListener(
-    'xi_sms.send',
-    function (\Xi\Sms\Event\SmsMessageEvent $event) {
+    Events::SEND,
+    function (SmsMessageEvent $event) {
         $msg = $event->getMessage();
         echo "Message sent.\n";
         echo "From: " . $msg->getFrom() . "\n";
@@ -40,7 +49,7 @@ $ed->addListener(
 
 $body = stream_get_contents(STDIN);
 
-$msg = new \Xi\Sms\SmsMessage($body, $from, $to);
+$msg = new SmsMessage($body, $from, $to);
 
 echo "Sending...\n";
-$gw->send($msg);
+$service->send($msg);
