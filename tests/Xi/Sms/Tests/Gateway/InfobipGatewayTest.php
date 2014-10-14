@@ -11,8 +11,7 @@ class InfobipGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function sendsCorrectlyFormattedXmlToRightPlace()
     {
-        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $gateway = new InfobipGateway($ed, 'lussuta', 'tussia', 'http://dr-kobros.com/api');
+        $gateway = new InfobipGateway('lussuta', 'tussia', 'http://dr-kobros.com/api');
 
         $browser = $this->getMockBuilder('Buzz\Browser')
             ->disableOriginalConstructor()
@@ -41,14 +40,6 @@ class InfobipGatewayTest extends \PHPUnit_Framework_TestCase
         );
 
         $message->addTo('358407682810');
-
-        $ed
-            ->expects($this->once())
-            ->method('dispatch')
-            ->with(
-                'xi_sms.send',
-                $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
-            );
 
         $ret = $gateway->send($message);
         $this->assertTrue($ret);

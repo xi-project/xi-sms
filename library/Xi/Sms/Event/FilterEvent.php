@@ -2,9 +2,8 @@
 
 namespace Xi\Sms\Event;
 
-use Xi\Sms\Event\SmsMessageEvent;
 use Xi\Sms\SmsMessage;
-use Xi\Sms\Gateway\Filter\FilterInterface;
+use Xi\Sms\Filter\FilterInterface;
 
 class FilterEvent extends SmsMessageEvent
 {

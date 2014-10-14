@@ -15,14 +15,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 interface GatewayInterface
 {
     /**
-     * Sends an SMS message. Fire and forget.
+     * Sends a fire and forget type SMS message.
      *
      * @param SmsMessage $message
      */
     public function send(SmsMessage $message);
-
-    /**
-     * @return EventDispatcherInterface
-     */
-    public function getEventDispatcher();
 }

@@ -1,24 +1,12 @@
 <?php
 
-namespace Xi\Sms\Tests\Gateway\Filter;
+namespace Xi\Sms\Tests\Filter;
 
 use Xi\Sms\SmsMessage;
-use Xi\Sms\Gateway\Filter\NumberLimitingFilter;
+use Xi\Sms\Filter\NumberLimitingFilter;
 
 class NumberLimitingFilterTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @test
-     */
-    public function classShouldExist()
-    {
-        $this->assertTrue(class_exists('Xi\Sms\Gateway\Filter\NumberLimitingFilter'));
-        $this->assertContains(
-            'Xi\Sms\Gateway\Filter\FilterInterface',
-            class_implements('Xi\Sms\Gateway\Filter\NumberLimitingFilter')
-        );
-    }
-
     /**
      * @test
      */

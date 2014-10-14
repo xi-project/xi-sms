@@ -165,13 +165,12 @@ class IpxGatewayTest extends \PHPUnit_Framework_TestCase
 
     protected function getGateway()
     {
-        $eventDispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $wsdlUrl = "http://europe.ipx.com/api/services2/SmsApi52?wsdl";
         $username = 'notrealuser';
         $password = 'incorrectpassword';
         $timeout = 1;
 
-        return new IpxGateway($eventDispatcher, $wsdlUrl, $username, $password, $timeout);
+        return new IpxGateway($wsdlUrl, $username, $password, $timeout);
     }
 
     /**
@@ -185,7 +184,6 @@ class IpxGatewayTest extends \PHPUnit_Framework_TestCase
                 ->getMock();
         $mockClient->expects($this->once())->method('__soapCall')->will($this->returnValue($soapResponse));
 
-        $eventDispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $wsdlUrl = 'http://example.com?wsdl';
         $username = 'username';
         $password = 'password';
@@ -193,7 +191,7 @@ class IpxGatewayTest extends \PHPUnit_Framework_TestCase
 
         $mockGateway = $this->getMockBuilder('Xi\Sms\Gateway\IpxGateway')
             ->setMethods(['getClient'])
-            ->setConstructorArgs([$eventDispatcher, $wsdlUrl, $username, $password, $timeout])
+            ->setConstructorArgs([$wsdlUrl, $username, $password, $timeout])
             ->getMock();
 
         $mockGateway->expects($this->once())->method('getClient')->will($this->returnValue($mockClient));

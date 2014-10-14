@@ -24,22 +24,13 @@ class MessageBirdGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function sends()
     {
-        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $gateway = new MessageBirdGateway($ed, MESSAGEBIRD_APIKEY);
+        $gateway = new MessageBirdGateway(MESSAGEBIRD_APIKEY);
 
         $message = new SmsMessage(
             'Pekkis tassa lussuttaa.',
             '358503028030',
             '358503028030'
         );
-
-        $ed
-            ->expects($this->once())
-            ->method('dispatch')
-            ->with(
-                'xi_sms.send',
-                $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
-            );
 
         $ret = $gateway->send($message);
         $this->assertTrue($ret);

@@ -15,7 +15,7 @@ use Xi\Sms\SmsException;
 use Xi\Sms\Event\SmsMessageEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class PixieGateway extends AbstractHttpRequestGateway
+class PixieGateway extends BaseHttpRequestGateway
 {
     /**
      * @var string
@@ -33,12 +33,10 @@ class PixieGateway extends AbstractHttpRequestGateway
     private $endpoint;
 
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
         $account,
         $password,
         $endpoint = 'http://smsserver.pixie.se/sendsms'
     ) {
-        parent::__construct($eventDispatcher);
         $this->account = $account;
         $this->password = $password;
         $this->endpoint = $endpoint;
@@ -59,8 +57,7 @@ class PixieGateway extends AbstractHttpRequestGateway
         }
         catch(SmsException $e)
         {
-            // Ignore the failure, notify event dispatcher anyways.
-            $this->notifyEventDispatcher($message);
+            // Nothing to do here
         }
         return true;
     }
@@ -81,8 +78,6 @@ class PixieGateway extends AbstractHttpRequestGateway
         $result = $this->parseResponse($response);
         if ($result === true)
         {
-            // Success
-            $this->notifyEventDispatcher($message);
             return;
         }
         else
@@ -107,17 +102,6 @@ class PixieGateway extends AbstractHttpRequestGateway
 
         return $this->endpoint . "?account=$this->account&signature=$signature&".
             "receivers=$receivers&sender=$sender&message=$body";
-    }
-
-    /**
-     * Notifies the event dispatcher
-     *
-     * @param SmsMessage $message
-     */
-    private function notifyEventDispatcher(SmsMessage $message)
-    {
-        $event = new SmsMessageEvent($message);
-        $this->getEventDispatcher()->dispatch('xi_sms.send', $event);
     }
 
     /**
