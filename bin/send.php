@@ -22,7 +22,7 @@ $to = $argv[2];
 $ed = new \Symfony\Component\EventDispatcher\EventDispatcher();
 
 $gw = null;
-$gw = new \Xi\Sms\Gateway\MessageBirdGateway($ed, 'live_KRy5It4Db3u5enpx9vmAzHIEy');
+$gw = new \Xi\Sms\Gateway\MessageBirdGateway($ed, '');
 if (!$gw) {
     throw new LogicException('Configure gateway');
 }
