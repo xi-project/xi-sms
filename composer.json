@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "kriswallsmith/buzz": "~0.7.0",
+        "kriswallsmith/buzz": "~0.7",
         "symfony/event-dispatcher": "~2.0",
         "messagebird/php-rest-api": "~1.1"
     },
