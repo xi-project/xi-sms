@@ -10,11 +10,9 @@
 namespace Xi\Sms\Gateway\Legacy;
 
 use Xi\Sms\SmsMessage;
-use Xi\Sms\Event\SmsMessageEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Xi\Sms\Gateway\AbstractHttpRequestGateway;
+use Xi\Sms\Gateway\BaseHttpRequestGateway;
 
-class MessageBirdGateway extends AbstractHttpRequestGateway
+class MessageBirdGateway extends BaseHttpRequestGateway
 {
     /**
      * @var string
@@ -40,12 +38,10 @@ class MessageBirdGateway extends AbstractHttpRequestGateway
     private $type = 'normal';
 
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
         $user,
         $password,
         $endpoint = 'https://api.messagebird.com'
     ) {
-        parent::__construct($eventDispatcher);
         $this->user = $user;
         $this->password = $password;
         $this->endpoint = $endpoint;
@@ -72,8 +68,6 @@ class MessageBirdGateway extends AbstractHttpRequestGateway
             $ret = $this->getClient()->post($url, array());
         }
 
-        $event = new SmsMessageEvent($message);
-        $this->getEventDispatcher()->dispatch('xi_sms.send', $event);
         return true;
     }
 }

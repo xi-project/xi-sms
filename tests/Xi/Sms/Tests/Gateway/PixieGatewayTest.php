@@ -37,9 +37,8 @@ class PixieGatewayTest extends \PHPUnit_Framework_TestCase
 
     private function getMockedGateway()
     {
-        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $browser = $this->getMockedBrowser();
-        $gateway = new PixieGateway($ed, 10203005, "DuY7ye99");
+        $gateway = new PixieGateway(10203005, "DuY7ye99");
         $gateway->setClient($browser);
         return $gateway;
     }
@@ -62,14 +61,6 @@ class PixieGatewayTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will(
             $this->returnValue($this->getMockFailure('Some kind of failure', 123))
-        );
-
-        $gateway->getEventDispatcher()
-            ->expects($this->once())
-            ->method('dispatch')
-            ->with(
-            'xi_sms.send',
-            $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
         );
 
         $message = new SmsMessage(

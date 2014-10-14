@@ -10,12 +10,10 @@
 namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
-use Xi\Sms\Event\SmsMessageEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use MessageBird\Client;
 use MessageBird\Objects\Message;
 
-class MessageBirdGateway extends AbstractGateway
+class MessageBirdGateway implements GatewayInterface
 {
     /**
      * @var string
@@ -28,10 +26,8 @@ class MessageBirdGateway extends AbstractGateway
     private $client;
 
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
         $apiKey
     ) {
-        parent::__construct($eventDispatcher);
         $this->apiKey = $apiKey;
     }
 
@@ -67,9 +63,6 @@ class MessageBirdGateway extends AbstractGateway
         $msg->body = $message->getBody();
 
         $this->getClient()->messages->create($msg);
-
-        $event = new SmsMessageEvent($message);
-        $this->getEventDispatcher()->dispatch('xi_sms.send', $event);
 
         return true;
     }

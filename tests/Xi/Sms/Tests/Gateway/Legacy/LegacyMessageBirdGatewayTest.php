@@ -25,8 +25,7 @@ class LegacyMessageBirdGatewayTest extends \PHPUnit_Framework_TestCase
                 array()
             );
 
-        $ed = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $gateway = new MessageBirdGateway($ed, 'username', 'password');
+        $gateway = new MessageBirdGateway('username', 'password');
 
         $gateway->setClient($browser);
 
@@ -35,14 +34,6 @@ class LegacyMessageBirdGatewayTest extends \PHPUnit_Framework_TestCase
             'Tietoisku',
             '3581234567'
         );
-
-        $ed
-            ->expects($this->once())
-            ->method('dispatch')
-            ->with(
-                'xi_sms.send',
-                $this->isInstanceOf('Xi\Sms\Event\SmsMessageEvent')
-            );
 
         $ret = $gateway->send($message);
         $this->assertTrue($ret);

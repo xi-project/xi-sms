@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Xi\Sms\Gateway\Filter;
+namespace Xi\Sms\Filter;
 
 use Xi\Sms\SmsMessage;
 

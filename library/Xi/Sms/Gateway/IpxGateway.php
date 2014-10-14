@@ -1,16 +1,20 @@
 <?php
 
+/**
+ * This file is part of the Xi SMS package.
+ *
+ * For copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
-use Xi\Sms\Gateway\AbstractGateway;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Xi\Sms\Event\SmsMessageEvent;
 
 /**
  * Ericsson Ipx SMS Gateway
  */
-class IpxGateway extends AbstractGateway
+class IpxGateway implements GatewayInterface
 {
     /**
      * Default socket timeout in seconds
@@ -26,7 +30,7 @@ class IpxGateway extends AbstractGateway
     const TON_MSISDN = '2';
 
     /**
-     * @var SoapClient
+     * @var \SoapClient
      */
     protected $client = null;
 
@@ -55,14 +59,12 @@ class IpxGateway extends AbstractGateway
     protected $timeout = self::DEFAULT_SOCKET_TIMEOUT;
 
     /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param string $username
      * @param string $password
      * @param string $wsdlUrl
      * @param int $timeout socket timeout in seconds
      */
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
         $wsdlUrl,
         $username,
         $password,
@@ -71,7 +73,6 @@ class IpxGateway extends AbstractGateway
         if (!$wsdlUrl || !$username || !$password) {
             throw new \InvalidArgumentException('Invalid IpxGateway configuration');
         }
-        parent::__construct($eventDispatcher);
         $this->wsdlUrl = $wsdlUrl;
         $this->username = $username;
         $this->password = $password;
@@ -90,17 +91,7 @@ class IpxGateway extends AbstractGateway
             $message->getBody()
         );
 
-        $this->dispatchSendEvent($message);
-
         return $result;
-    }
-
-    /**
-     * @param \Xi\Sms\SmsMessage $message
-     */
-    protected function dispatchSendEvent($message)
-    {
-        $this->getEventDispatcher()->dispatch('xi_sms.send', new SmsMessageEvent($message));
     }
 
     /**
