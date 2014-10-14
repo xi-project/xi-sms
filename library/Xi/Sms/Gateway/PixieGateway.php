@@ -9,11 +9,8 @@
 
 namespace Xi\Sms\Gateway;
 
-use \Exception;
 use Xi\Sms\SmsMessage;
 use Xi\Sms\SmsException;
-use Xi\Sms\Event\SmsMessageEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PixieGateway extends BaseHttpRequestGateway
 {

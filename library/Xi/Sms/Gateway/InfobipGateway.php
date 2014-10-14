@@ -9,9 +9,7 @@
 
 namespace Xi\Sms\Gateway;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xi\Sms\SmsMessage;
-use Xi\Sms\Event\SmsMessageEvent;
 use XMLWriter;
 
 /**

@@ -10,8 +10,6 @@
 namespace Xi\Sms\Gateway\Legacy;
 
 use Xi\Sms\SmsMessage;
-use Xi\Sms\Event\SmsMessageEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xi\Sms\Gateway\BaseHttpRequestGateway;
 
 class MessageBirdGateway extends BaseHttpRequestGateway

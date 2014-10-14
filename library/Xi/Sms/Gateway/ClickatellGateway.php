@@ -10,8 +10,6 @@
 namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
-use Xi\Sms\Event\SmsMessageEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ClickatellGateway extends BaseHttpRequestGateway
 {

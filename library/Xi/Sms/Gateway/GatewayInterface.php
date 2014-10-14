@@ -10,7 +10,6 @@
 namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 interface GatewayInterface
 {
