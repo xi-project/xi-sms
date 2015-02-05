@@ -23,8 +23,8 @@
         "phpunit/phpunit": "~4.0"
     },
     "autoload": {
-        "psr-0": {
-            "Xi\\Sms": "library/"
+        "psr-4": {
+            "Xi\\Sms\\": "library/Xi/Sms/"
         }
     },
     "minimum-stability": "stable"

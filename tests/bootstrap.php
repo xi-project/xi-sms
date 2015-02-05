@@ -8,14 +8,3 @@ php composer.phar install --dev
 }
 
 gc_enable();
-
-spl_autoload_register(function($class) {
-
-    $filename = str_replace("\\", DIRECTORY_SEPARATOR, $class) . '.php';
-
-    if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . $filename)) {
-        include_once $filename;
-    }
-
-    return class_exists($class, false);
-});
