@@ -34,22 +34,13 @@ class SmsMessage
      * @param string $from
      * @param array|string $to
      */
-    public function __construct($body = null, $from = null, $to = array())
+    public function __construct($body, $from, $to)
     {
         $this->body = $body;
         $this->from = $from;
 
-        if ($to) {
-            $this->setTo($to);
-        }
-    }
-
-    /**
-     * @param string $body
-     */
-    public function setBody($body)
-    {
-        $this->body = $body;
+        $to_array = $this->checkTo($to);
+        $this->to = $to_array;
     }
 
     /**
@@ -64,13 +55,14 @@ class SmsMessage
      * Sets receiver or an array of receivers
      *
      * @param string|array $to
+     * @return array $to
      */
-    public function setTo($to)
+    private function checkTo($to)
     {
         if (!is_array($to)) {
             $to = array($to);
         }
-        $this->to = $to;
+        return $to;
     }
 
     /**
@@ -87,14 +79,6 @@ class SmsMessage
     public function addTo($to)
     {
         $this->to[] = $to;
-    }
-
-    /**
-     * @param string $from
-     */
-    public function setFrom($from)
-    {
-        $this->from = $from;
     }
 
     /**
