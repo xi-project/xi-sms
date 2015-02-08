@@ -20,7 +20,8 @@
         "messagebird/php-rest-api": "~1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "league/phpunit-coverage-listener" : "~1.1"
     },
     "autoload": {
         "psr-4": {
