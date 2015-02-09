@@ -38,9 +38,26 @@ class SmsMessage
     {
         $this->body = $body;
         $this->from = $from;
-
-        $to_array = $this->checkTo($to);
-        $this->to = $to_array;
+        $this->to   = $this->checkTo($to);
+    }
+    
+    public function __call($function, $args)
+    {
+        $arguments = implode(', ', $args);
+        switch ($function) {
+            case 'setBody':
+                $this->body = $arguments;
+                break;
+            case 'setFrom' :
+                $this->from = $arguments;
+                break;
+            case 'setTo' :
+                $this->to = $this->checkTo($arguments);
+                break;
+            default:
+                throw new \Exception('Invalid Method');
+                
+        }
     }
 
     /**
