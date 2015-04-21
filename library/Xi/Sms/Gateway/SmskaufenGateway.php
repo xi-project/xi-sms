@@ -13,7 +13,6 @@ namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
 use Xi\Sms\SmsException;
-use Carbon\Carbon;
 
 class SmskaufenGateway extends BaseHttpRequestGateway {
 
@@ -81,10 +80,7 @@ class SmskaufenGateway extends BaseHttpRequestGateway {
 
 		if (count($numbers) > 1) {
 			$params['massen'] = 1;
-			$dt = \Carbon\Carbon::yesterday();
-			$dt->setToStringFormat('d.m.Y-00:01');
-			$dt->__toString();
-			$params['termin'] = $dt->__toString(); # past => immediately
+			$params['termin'] = date('d.m.Y-00:01', strtotime("-1 day")); # past => immediately
 		}
 
 		if (!empty($params['massen']) &&

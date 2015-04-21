@@ -7,7 +7,6 @@ use Xi\Sms\SmsService;
 use Xi\Sms\SmsException;
 use Xi\Sms\Gateway\SmskaufenGateway;
 use Buzz\Message\Response;
-use Carbon\Carbon;
 
 class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 {
@@ -288,7 +287,7 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 						$actual['empfaenger'] === '00491111;015111111;0170111111' &&
 						$actual['absender'] === '00491234' &&
 						$actual['massen'] == 1 &&
-						$actual['termin'] === '01.01.2009-00:01';
+						strtotime($actual['termin']) < time();
 					})
 			)
 			->will($this->returnValue($ResponseMock));
@@ -303,9 +302,6 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 			->expects($this->once())
 			->method('getClient')
 			->will($this->returnValue($ClientMock));
-
-		$dt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', '2009-01-02 20:20:00');
-		\Carbon\Carbon::setTestNow($dt);
 
 		$service = new SmsService($this->SmskaufenGateway);
 		$msg = new SmsMessage('Hi', '00491234', array('00491111', '015111111', '0170111111'));
