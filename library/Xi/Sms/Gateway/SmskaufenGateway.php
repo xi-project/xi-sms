@@ -57,6 +57,14 @@ class SmskaufenGateway extends BaseHttpRequestGateway {
 		return $this->sms($message->getBody(), $message->getTo(), $message->getFrom());
 	}
 
+	/**
+	 * Sends a message through Smskaufen
+	 * @param $text Note: you should handle utf8_decode() on your own
+	 * @param $to
+	 * @param $from
+	 * @return bool
+	 * @throws SmsException
+	 */
 	public function sms($text, $to, $from) {
 
 		if (empty($text)) {
@@ -73,7 +81,7 @@ class SmskaufenGateway extends BaseHttpRequestGateway {
 			'id' => $this->settings['username'],
 			'pw' => $this->settings['password'],
 			'type' => $this->settings['gateway'],
-			'text' => utf8_decode($text),
+			'text' => $text,
 			'empfaenger' => implode(';', $numbers),
 			'absender' => $from,
 		);
@@ -89,10 +97,9 @@ class SmskaufenGateway extends BaseHttpRequestGateway {
 			return false;
 		}
 
-		$res = $this->getClient()->post(
-			$this->getBaseUrl() . 'sms.php' ,
-			array('Content-type' => 'application/x-www-form-urlencoded'),
-			$params
+		$res = $this->getClient()->get(
+			$this->getBaseUrl() . 'sms.php?'.http_build_query($params),
+			array('Content-type' => 'application/x-www-form-urlencoded')
 		);
 
 		if (!$res->isOk()) {

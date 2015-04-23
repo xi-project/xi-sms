@@ -39,10 +39,10 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 			->method('isOk')
 			->will($this->returnValue(false));
 
-		$ClientMock = $this->getMock('Browser', array('post'));
+		$ClientMock = $this->getMock('Browser', array('get'));
 		$ClientMock
 			->expects($this->once())
-			->method('post')
+			->method('get')
 			->will($this->returnValue($ResponseMock));
 
 		$this->SmskaufenGateway = $this->getMock('Xi\Sms\Gateway\SmskaufenGateway', array('getClient'), array(array(
@@ -71,10 +71,10 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 			->method('isOk')
 			->will($this->returnValue(false));
 
-		$ClientMock = $this->getMock('Browser', array('post'));
+		$ClientMock = $this->getMock('Browser', array('get'));
 		$ClientMock
 			->expects($this->once())
-			->method('post')
+			->method('get')
 			->will($this->returnValue($ResponseMock));
 
 		$this->SmskaufenGateway = $this->getMock('Xi\Sms\Gateway\SmskaufenGateway', array('getClient'), array(array(
@@ -106,10 +106,10 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 			->method('isOk')
 			->will($this->returnValue(false));
 
-		$ClientMock = $this->getMock('Browser', array('post'));
+		$ClientMock = $this->getMock('Browser', array('get'));
 		$ClientMock
 			->expects($this->once())
-			->method('post')
+			->method('get')
 			->will($this->returnValue($ResponseMock));
 
 		$this->SmskaufenGateway = $this->getMock('Xi\Sms\Gateway\SmskaufenGateway', array('getClient'), array(array(
@@ -165,10 +165,10 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 			->method('getStatusCode')
 			->will($this->returnValue(200));
 
-		$ClientMock = $this->getMock('Browser', array('post'));
+		$ClientMock = $this->getMock('Browser', array('get'));
 		$ClientMock
 			->expects($this->once())
-			->method('post')
+			->method('get')
 			->will($this->returnValue($ResponseMock));
 
 		$this->SmskaufenGateway = $this->getMock('Xi\Sms\Gateway\SmskaufenGateway', array('getClient'), array(array(
@@ -198,10 +198,10 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 			->method('getStatusCode')
 			->will($this->returnValue(404));
 
-		$ClientMock = $this->getMock('Browser', array('post'));
+		$ClientMock = $this->getMock('Browser', array('get'));
 		$ClientMock
 			->expects($this->once())
-			->method('post')
+			->method('get')
 			->will($this->returnValue($ResponseMock));
 
 		$this->SmskaufenGateway = $this->getMock('Xi\Sms\Gateway\SmskaufenGateway', array('getClient'), array(array(
@@ -235,10 +235,10 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 			->method('getStatusCode')
 			->will($this->returnValue(200));
 
-		$ClientMock = $this->getMock('Browser', array('post'));
+		$ClientMock = $this->getMock('Browser', array('get'));
 		$ClientMock
 			->expects($this->once())
-			->method('post')
+			->method('get')
 			->will($this->returnValue($ResponseMock));
 
 		$this->SmskaufenGateway = $this->getMock('Xi\Sms\Gateway\SmskaufenGateway', array('getClient'), array(array(
@@ -272,23 +272,29 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 			->method('isOk')
 			->will($this->returnValue(true));
 
-		$ClientMock = $this->getMock('Browser', array('post'));
+		$ClientMock = $this->getMock('Browser', array('get'));
 		$ClientMock
 			->expects($this->once())
-			->method('post')
+			->method('get')
 			->with(
-				'http://www.smskaufen.com/sms/gateway/sms.php',
-				$this->isType('array'),
 				$this->callback(function($actual) {
-						return $actual['id'] === 'XXX' &&
-						$actual['pw'] === 'YYY' &&
-						$actual['type'] == 4 &&
-						$actual['text'] === 'Hi' &&
-						$actual['empfaenger'] === '00491111;015111111;0170111111' &&
-						$actual['absender'] === '00491234' &&
-						$actual['massen'] == 1 &&
-						strtotime($actual['termin']) < time();
-					})
+					$url = parse_url($actual);
+					parse_str($url['query'], $query);
+					return
+						$url['scheme'] === 'http' &&
+						$url['host'] === 'www.smskaufen.com' &&
+						$url['path'] === '/sms/gateway/sms.php' &&
+						$query['id'] === 'XXX' &&
+						$query['pw'] === 'YYY' &&
+						$query['type'] == 4 &&
+						$query['text'] === 'Hi' &&
+						$query['empfaenger'] === '00491111;015111111;0170111111' &&
+						$query['absender'] === '00491234' &&
+						$query['massen'] == 1 &&
+						strtotime($query['termin']) < time();
+				}),
+				$this->isType('array')
+
 			)
 			->will($this->returnValue($ResponseMock));
 
@@ -323,21 +329,26 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 			->method('isOk')
 			->will($this->returnValue(true));
 
-		$ClientMock = $this->getMock('Browser', array('post'));
+		$ClientMock = $this->getMock('Browser', array('get'));
 		$ClientMock
 			->expects($this->once())
-			->method('post')
+			->method('get')
 			->with(
-				'http://www.smskaufen.com/sms/gateway/sms.php',
-				$this->isType('array'),
 				$this->callback(function($actual) {
-						return $actual['id'] === 'XXX' &&
-						$actual['pw'] === 'YYY' &&
-						$actual['type'] == 4 &&
-						$actual['text'] === 'Hi' &&
-						$actual['empfaenger'] === '00491111' &&
-						$actual['absender'] === '00491234';
-					})
+					$url = parse_url($actual);
+					parse_str($url['query'], $query);
+					return
+						$url['scheme'] === 'http' &&
+						$url['host'] === 'www.smskaufen.com' &&
+						$url['path'] === '/sms/gateway/sms.php' &&
+						$query['id'] === 'XXX' &&
+						$query['pw'] === 'YYY' &&
+						$query['type'] == 4 &&
+						$query['text'] === 'Hi' &&
+						$query['empfaenger'] === '00491111' &&
+						$query['absender'] === '00491234';
+				}),
+				$this->isType('array')
 			)
 			->will($this->returnValue($ResponseMock));
 
