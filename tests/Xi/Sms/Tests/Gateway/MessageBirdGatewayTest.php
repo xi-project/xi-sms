@@ -10,11 +10,11 @@ class MessageBirdGatewayTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!RECEIVER_MSISDN) {
+        if (!getenv('RECEIVER_MSISDN')) {
             return $this->markTestSkipped('Receiver MSISDN must be set');
         }
 
-        if (!MESSAGEBIRD_APIKEY) {
+        if (!getenv('MESSAGEBIRD_APIKEY')) {
             return $this->markTestSkipped('Api key must be set');
         }
     }
@@ -24,7 +24,7 @@ class MessageBirdGatewayTest extends \PHPUnit_Framework_TestCase
      */
     public function sends()
     {
-        $gateway = new MessageBirdGateway(MESSAGEBIRD_APIKEY);
+        $gateway = new MessageBirdGateway(getenv('MESSAGEBIRD_APIKEY'));
 
         $message = new SmsMessage(
             'Pekkis tassa lussuttaa.',

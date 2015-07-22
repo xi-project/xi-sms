@@ -6,19 +6,23 @@ php:
   - 5.5
   - 5.6
   - hhvm
-  
+
 matrix:
   allow_failures:
     - php: hhvm
 
 before_script:
-  - travis_retry composer self-update
-  - travis_retry composer install --no-interaction --prefer-source
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev --no-interaction
 
 script:
- - mkdir -p /tmp/xi/sms
- - phpunit --coverage-clover /tmp/xi/sms/coverage.xml
+  - mkdir -p build/logs
+  - php vendor/bin/phpunit -c phpunit.xml.dist
 
 after_script:
- - php vendor/bin/coveralls -v
+  - php vendor/bin/coveralls
 
+env:
+  global:
+    - secure: "aZokglk0VE5d7FXQ9pjDGW2wqxs78rAMY+PrPOqhIi1BaNw9lFoc9njKfqD8jrTeAh0fnkUVTM0Iq10m1Hvm+OykXpv0xDq3NrgE6MvpVgrfEWBvZVFfDqSgsNoFCPXYyUdiyRP8dTwnYc/lCBuTNBiH/Ba+mgs4E1n/FgjeTj8="
+    - secure: "J1D4S3n6Pu7BUmWdzH+tbtRtfHRD6UgiOYAWMA6DEL6ZNFmFZlIfU9EFsiQfAJelq+bijqyxMPv/mwkzAdNb2rGpwcScRM6NGqdRD8BNi0qGmf8EGkxZO7Gx6rLIQdLb/aGUn9dtQDw3ierpnIW9vHSMaO+SDNMwrrD+17Al49M="
