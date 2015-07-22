@@ -12,7 +12,7 @@ class FilterEventTest extends \PHPUnit_Framework_TestCase
      */
     public function getMessageShouldReturnMessage()
     {
-        $message = new SmsMessage('Tussi');
+        $message = new SmsMessage('Tussi', 'Lussutaja', '358503028030');
         $filter = $this->getMock('Xi\Sms\Filter\FilterInterface');
         $event = new FilterEvent($message, $filter);
         $this->assertSame($message, $event->getMessage());
