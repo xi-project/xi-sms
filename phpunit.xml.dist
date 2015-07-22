@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpunit bootstrap="./tests/bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="xi-sms-tests">
+            <directory>./tests/Xi</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <const name="RECEIVER_MSISDN" value="" />
+        <const name="MESSAGEBIRD_APIKEY" value="" />
+    </php>
+    
+    <filter>
+        <blacklist>
+            <directory suffix=".php">./vendor/</directory>
+            <directory suffix=".php">./tests/</directory>
+        </blacklist>
+    </filter>
+    
+    <listeners>
+        <listener class="League\PHPUnitCoverageListener\Listener">
+            <arguments>
+                <array>
+                    <element key="printer">
+                        <object class="League\PHPUnitCoverageListener\Printer\StdOut"/>
+                    </element>
+                    <element key="hook">
+                        <object class="League\PHPUnitCoverageListener\Hook\Travis"/>
+                    </element>
+                    <element key="namespace">
+                        <string>Xi\Sms\</string>
+                    </element>
+                    <element key="repo_token">
+                        <string>REPLACE ME WITH COVERALLS TOKEN</string>
+                    </element>
+                    <element key="target_url">
+                        <string>https://coveralls.io/api/v1/jobs</string>
+                    </element>
+                    <element key="coverage_dir">
+                        <string>/tmp/xi/sms</string>
+                    </element>
+                </array>
+            </arguments>
+        </listener>
+    </listeners>
+    
+    <logging>
+        <log type="coverage-text" target="/tmp/xi/sms/coverage.txt" />
+        <log type="coverage-clover" target="/tmp/xi/sms/coverage.xml"/>
+    </logging>
+
+</phpunit>
