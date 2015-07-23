@@ -7,7 +7,7 @@ use Xi\Sms\SmsMessage;
 
 class SmsServiceTest extends \PHPUnit_Framework_TestCase
 {
-    
+
     private $innerGateway;
     private $service;
     private $message;
@@ -22,7 +22,7 @@ class SmsServiceTest extends \PHPUnit_Framework_TestCase
         $this->service          = new SmsService($this->innerGateway, $this->eventDispatcher);
         $this->message          = new SmsMessage('Lussuhovi', '358503028030', '358503028031');
     }
-    
+
     /**
      * @test
      */
@@ -145,6 +145,16 @@ class SmsServiceTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch');
 
         $this->service->send($this->message);
+    }
+
+    /**
+     * @test
+     */
+    public function wontSendReceiverless()
+    {
+        $message = new SmsMessage('Xooxer', 'Tenhunen');
+        $this->setExpectedException('Xi\Sms\RuntimeException');
+        $this->service->send($message);
     }
 
 }

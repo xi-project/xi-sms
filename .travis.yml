@@ -2,6 +2,8 @@ sudo: false
 language: php
 
 php:
+  - 5.3
+  - 5.4
   - 5.5
   - 5.6
   - hhvm
@@ -22,4 +24,4 @@ script:
 env:
   global:
     - secure: "aZokglk0VE5d7FXQ9pjDGW2wqxs78rAMY+PrPOqhIi1BaNw9lFoc9njKfqD8jrTeAh0fnkUVTM0Iq10m1Hvm+OykXpv0xDq3NrgE6MvpVgrfEWBvZVFfDqSgsNoFCPXYyUdiyRP8dTwnYc/lCBuTNBiH/Ba+mgs4E1n/FgjeTj8="
-    - secure: "J1D4S3n6Pu7BUmWdzH+tbtRtfHRD6UgiOYAWMA6DEL6ZNFmFZlIfU9EFsiQfAJelq+bijqyxMPv/mwkzAdNb2rGpwcScRM6NGqdRD8BNi0qGmf8EGkxZO7Gx6rLIQdLb/aGUn9dtQDw3ierpnIW9vHSMaO+SDNMwrrD+17Al49M="
+    - secure: "I5lRdTNbi9y99pobvnmQZI343rMKrQpbB/GfCKfsavHw/SeiUEpCQQ85HOb+IBNIaB2o3zwQ/l3GZFqltk45AU12zgWQpPjycWD/uGiptzL2Pi5OawAwVPLqg05tWEGI90hYRbABDeuEddi8VA4OQy8TAYScnH8+4AUNR8knS/0="
