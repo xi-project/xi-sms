@@ -101,7 +101,7 @@ class IpxGatewayTest extends \PHPUnit_Framework_TestCase
          * 1 – Alpha numeric (max length 11)
          * 2 – MSISDN
          */
-        return array(
+        return [
             ['1', '0'],
             ['12', '0'],
             ['123', '0'],
@@ -135,7 +135,7 @@ class IpxGatewayTest extends \PHPUnit_Framework_TestCase
             ['Koodi', '1'],
             ['ABC 123.fi', '1'],
             ['040 123 456', '1'],
-        );
+        ];
     }
 
     /**
