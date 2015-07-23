@@ -1,24 +1,26 @@
+sudo: false
 language: php
 
 php:
-  - 5.3
   - 5.4
   - 5.5
   - 5.6
   - hhvm
-  
+
 matrix:
   allow_failures:
     - php: hhvm
 
 before_script:
-  - travis_retry composer self-update
-  - travis_retry composer install --no-interaction --prefer-source
+  - phpenv rehash
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev --no-interaction
 
 script:
- - mkdir -p /tmp/xi/sms
- - phpunit --coverage-clover /tmp/xi/sms/coverage.xml
+  - mkdir -p build/logs
+  - php vendor/bin/phpunit -c phpunit.xml.dist
 
-after_script:
- - php vendor/bin/coveralls -v
-
+env:
+  global:
+    - secure: "aZokglk0VE5d7FXQ9pjDGW2wqxs78rAMY+PrPOqhIi1BaNw9lFoc9njKfqD8jrTeAh0fnkUVTM0Iq10m1Hvm+OykXpv0xDq3NrgE6MvpVgrfEWBvZVFfDqSgsNoFCPXYyUdiyRP8dTwnYc/lCBuTNBiH/Ba+mgs4E1n/FgjeTj8="
+    - secure: "I5lRdTNbi9y99pobvnmQZI343rMKrQpbB/GfCKfsavHw/SeiUEpCQQ85HOb+IBNIaB2o3zwQ/l3GZFqltk45AU12zgWQpPjycWD/uGiptzL2Pi5OawAwVPLqg05tWEGI90hYRbABDeuEddi8VA4OQy8TAYScnH8+4AUNR8knS/0="

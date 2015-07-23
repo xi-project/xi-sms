@@ -105,7 +105,7 @@ class PixieGatewayTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function throwsSmsExceptionOnError()
+    public function throwsRuntimeExceptionOnError()
     {
         $gateway = $this->getMockedGateway();
         $gateway->getClient()
@@ -121,7 +121,7 @@ class PixieGatewayTest extends \PHPUnit_Framework_TestCase
             array(12345678)
         );
 
-        $this->setExpectedException('\Xi\Sms\SmsException');
+        $this->setExpectedException('\Xi\Sms\RuntimeException');
 
         $gateway->sendOrThrowException($message);
     }
@@ -129,7 +129,7 @@ class PixieGatewayTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function throwsSmsExceptionWithInvalidServerResponse()
+    public function throwsRuntimeExceptionWithInvalidServerResponse()
     {
         $gateway = $this->getMockedGateway();
         $gateway->getClient()
@@ -145,7 +145,7 @@ class PixieGatewayTest extends \PHPUnit_Framework_TestCase
             array(12345678)
         );
 
-        $this->setExpectedException('\Xi\Sms\SmsException');
+        $this->setExpectedException('Xi\Sms\RuntimeException');
 
         $gateway->sendOrThrowException($message);
     }

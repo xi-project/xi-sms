@@ -34,34 +34,15 @@ class SmsMessage
      * @param string $from
      * @param array|string $to
      */
-    public function __construct($body, $from, $to)
+    public function __construct($body, $from, $to = [])
     {
         $this->body = $body;
         $this->from = $from;
-        $this->to   = $this->checkTo($to);
-    }
-    
-    public function __call($function, $args)
-    {
-        $arguments = implode(', ', $args);
-        switch ($function) {
-            case 'setBody':
-                $this->body = $arguments;
-                break;
-            case 'setFrom' :
-                $this->from = $arguments;
-                break;
-            case 'setTo' :
-                $this->to = $this->checkTo($arguments);
-                break;
-            default:
-                throw new \Exception('Invalid Method');
-                
-        }
+        $this->to   = array_unique($this->checkTo($to));
     }
 
     /**
-     * @return null|string
+     * @return string
      */
     public function getBody()
     {
@@ -96,6 +77,9 @@ class SmsMessage
     public function addTo($to)
     {
         $this->to[] = $to;
+        $this->to = array_unique($this->to);
+
+        return $this;
     }
 
     /**

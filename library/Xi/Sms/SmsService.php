@@ -65,6 +65,9 @@ class SmsService
      */
     public function send(SmsMessage $message)
     {
+        if (!$message->getTo()) {
+            throw new RuntimeException('Cannot send a message with no receivers');
+        }
 
         foreach ($this->getFilters() as $filter) {
             /** @var FilterInterface $filter */

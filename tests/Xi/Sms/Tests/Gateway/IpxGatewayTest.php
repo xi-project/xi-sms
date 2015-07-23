@@ -101,7 +101,7 @@ class IpxGatewayTest extends \PHPUnit_Framework_TestCase
          * 1 – Alpha numeric (max length 11)
          * 2 – MSISDN
          */
-        return[
+        return [
             ['1', '0'],
             ['12', '0'],
             ['123', '0'],

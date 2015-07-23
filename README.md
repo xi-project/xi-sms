@@ -5,7 +5,8 @@ SMS library for PHP 5.3+.
 
 Abstracts away the gateways. Just send'n go!
 
-Pull requests are very welcome!
+Pull requests are welcome! I'm not very actively maintaining this, though, and am the
+worst possible maintainer anyways, so sorry if your pull requests take their time :(
 
 ```php
 <?php

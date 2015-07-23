@@ -6,64 +6,49 @@ use Xi\Sms\SmsMessage;
 
 class SmsMessageTest extends \PHPUnit_Framework_TestCase
 {
-    private $message;
-    
-    public function setUp()
-    {
-        $this->message = new SmsMessage('Tussi', 'Lussutaja', '358503028030');
-    }
-    
-    /**
-     * @test
-     */
-    public function classShouldExist()
-    {
-        $this->assertTrue(class_exists('Xi\Sms\SmsMessage'));
-    }
-
     /**
      * @test
      */
     public function messageShouldInitializeViaConstructor()
     {
-        $this->assertSame('Tussi', $this->message->getBody());
-        $this->assertSame('Lussutaja', $this->message->getFrom());
-        $this->assertSame(array('358503028030'), $this->message->getTo());
+        $message = new SmsMessage('Tussi', 'Lussutaja', '358503028030');
 
+        $this->assertSame('Tussi', $message->getBody());
+        $this->assertSame('Lussutaja', $message->getFrom());
+        $this->assertSame(array('358503028030'), $message->getTo());
     }
 
     /**
      * @test
      */
-    public function settersAndGettersShouldWork()
+    public function canAddTo()
     {
-        $this->assertNotNull($this->message->getFrom());
-        $this->assertNotNull($this->message->getBody());
-        $this->assertEquals(array('358503028030'), $this->message->getTo());
+        $message = new SmsMessage('Heippa hei', 'Tenhunen');
 
-        $this->message->setFrom('Losoposki');
-        $this->message->setBody('Ollaanko kavereita?');
-        $this->message->addTo('358503028030');
-        
-        $this->assertEquals('Losoposki', $this->message->getFrom());
-        $this->assertEquals('Ollaanko kavereita?', $this->message->getBody());
-        $this->assertEquals(array('358503028030', '358503028030'), $this->message->getTo());
+        $this->assertInternalType('array', $message->getTo());
+        $this->assertCount(0, $message->getTo());
 
-        $this->message->addTo('35850666');
-        $this->assertEquals(array('358503028030', '358503028030', '35850666'), $this->message->getTo());
-
-        $this->message->setTo('358503028031');
-        $this->assertEquals(array('358503028031'), $this->message->getTo());
+        $this->assertSame($message, $message->addTo('12345'));
+        $this->assertSame(array('12345'), $message->getTo());
     }
-    
+
     /**
      * @test
-     * 
-     * @expectedException Exception
-     * @expectedExceptionMessage Invalid Method
      */
-    public function callingInvalidMethod()
+    public function wontAddDuplicates()
     {
-        $this->message->methodThatDoesNotExists();
+        $message = new SmsMessage(
+            'Tussi',
+            'Lussutaja',
+            [
+                '358503028030',
+                '358503028030',
+            ]
+        );
+
+        $this->assertSame(array('358503028030'), $message->getTo());
+
+        $message->addTo('358503028030');
+        $this->assertSame(array('358503028030'), $message->getTo());
     }
 }

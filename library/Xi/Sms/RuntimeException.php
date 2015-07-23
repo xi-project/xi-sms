@@ -9,6 +9,7 @@
 
 namespace Xi\Sms;
 
-interface SmsException
+class RuntimeException extends \RuntimeException implements SmsException
 {
+
 }

@@ -4,9 +4,7 @@ namespace Xi\Sms\Tests\Gateway;
 
 use Xi\Sms\SmsMessage;
 use Xi\Sms\SmsService;
-use Xi\Sms\SmsException;
 use Xi\Sms\Gateway\SmskaufenGateway;
-use Buzz\Message\Response;
 
 class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +22,7 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 		$service = new SmsService($this->SmskaufenGateway);
 
 		$msg = new SmsMessage('Hi', '00491234', array('00491111', '015111111', '0170111111'));
-		$this->setExpectedException('Xi\Sms\SmsException');
+		$this->setExpectedException('Xi\Sms\RuntimeException');
 		$service->send($msg);
 	}
 
@@ -146,7 +144,7 @@ class SmskaufenGatewayTest extends \PHPUnit_Framework_TestCase
 		// 591 characters = 4 SMS
 		$text = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
 		$msg = new SmsMessage($text, '00491234', '00491111');
-		$this->setExpectedException('Xi\Sms\SmsException');
+		$this->setExpectedException('Xi\Sms\RuntimeException');
 		$service->send($msg);
 	}
 

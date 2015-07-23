@@ -12,7 +12,7 @@
 namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
-use Xi\Sms\SmsException;
+use Xi\Sms\RuntimeException;
 
 class SmskaufenGateway extends BaseHttpRequestGateway {
 
@@ -48,7 +48,7 @@ class SmskaufenGateway extends BaseHttpRequestGateway {
 		$this->settings = array_merge($this->settings, $settings);
 
 		if (empty($this->settings['username']) || empty($this->settings['password'])) {
-			throw new SmsException('Credentials missing');
+			throw new RuntimeException('Credentials missing');
 		}
 	}
 
@@ -63,7 +63,7 @@ class SmskaufenGateway extends BaseHttpRequestGateway {
 	 * @param $to
 	 * @param $from
 	 * @return bool
-	 * @throws SmsException
+	 * @throws RuntimeException
 	 */
 	public function sms($text, $to, $from) {
 
@@ -72,7 +72,7 @@ class SmskaufenGateway extends BaseHttpRequestGateway {
 		}
 		if (strlen($text) > 160 &&
 			!in_array($this->settings['gateway'], array(2,3,4,8))) {
-			throw new SmsException('Only gateways 2,3,4,8 allow sending messages with more than 160 chars.');
+			throw new RuntimeException('Only gateways 2,3,4,8 allow sending messages with more than 160 chars.');
 			return false;
 		}
 
@@ -93,7 +93,7 @@ class SmskaufenGateway extends BaseHttpRequestGateway {
 
 		if (!empty($params['massen']) &&
 			!in_array($this->settings['gateway'], array(2,3,4,8))) {
-			throw new SmsException('Only gateways 2,3,4,8 allow mass sending');
+			throw new RuntimeException('Only gateways 2,3,4,8 allow mass sending');
 			return false;
 		}
 

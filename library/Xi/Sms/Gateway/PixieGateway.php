@@ -10,7 +10,7 @@
 namespace Xi\Sms\Gateway;
 
 use Xi\Sms\SmsMessage;
-use Xi\Sms\SmsException;
+use Xi\Sms\RuntimeException;
 
 class PixieGateway extends BaseHttpRequestGateway
 {
@@ -52,7 +52,7 @@ class PixieGateway extends BaseHttpRequestGateway
         {
             $this->sendOrThrowException($message);
         }
-        catch(SmsException $e)
+        catch(RuntimeException $e)
         {
             // Nothing to do here
         }
@@ -66,7 +66,7 @@ class PixieGateway extends BaseHttpRequestGateway
      *
      * @return void
      *
-     * @throws SmsException if the SMS could not be sent
+     * @throws RuntimeException if the SMS could not be sent
      */
     public function sendOrThrowException(SmsMessage $message)
     {
@@ -106,7 +106,7 @@ class PixieGateway extends BaseHttpRequestGateway
      *
      * @param \Buzz\Message\Response $response
      *
-     * @return mixed Returns boolean true for success, or SmsException for errors
+     * @return mixed Returns boolean true for success, or RuntimeException for errors
      */
     private function parseResponse(\Buzz\Message\Response $response)
     {
@@ -116,7 +116,7 @@ class PixieGateway extends BaseHttpRequestGateway
         $result = @$response->loadXml($content);
         if ($result === false)
         {
-            return new SmsException('Could not parse XML response from Pixie', 100);
+            return new RuntimeException('Could not parse XML response from Pixie', 100);
         }
 
         $code = $response->firstChild->getAttribute('code');
@@ -127,6 +127,6 @@ class PixieGateway extends BaseHttpRequestGateway
 
         $message = $response->firstChild->getAttribute('description');
 
-        return new SmsException($message, $code);
+        return new RuntimeException($message, $code);
     }
 }
